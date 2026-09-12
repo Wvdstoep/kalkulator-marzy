@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalkulator marży dla sklepu — ile naprawdę zarabiasz na zamówieniu?</title>
+<meta name="description" content="Darmowy kalkulator marży dla sklepów internetowych. W 20 sekund policz, ile naprawdę zostaje z zamówienia — po zakupie, wysyłce, prowizjach, VAT i marketingu. Bez konta.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kalkulator marży dla sklepu — ile naprawdę zarabiasz na zamówieniu?">
+<meta property="og:description" content="Za darmo. Policz, ile naprawdę zostaje z zamówienia po wszystkich kosztach. Bez konta, bez haczyka.">
+<meta property="og:image" content="https://wvdstoep.github.io/kalkulator-marzy/og-image.jpg">
+<meta property="og:url" content="https://wvdstoep.github.io/kalkulator-marzy/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0f1720;--muted:#647084;--line:#e6eaf0;--bg:#f4f6f9;--card:#fff;--brand:#2563eb;--soft:#eef3ff}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px}
+  header{padding:40px 0 8px;text-align:center}
+  .badge{display:inline-block;background:var(--soft);color:var(--brand);font-weight:600;font-size:.8rem;padding:6px 14px;border-radius:999px;margin-bottom:16px}
+  h1{font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-.02em;margin:.1em 0}
+  .sub{color:var(--muted);max-width:46ch;margin:10px auto 0}
+  .app{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0 10px}
+  @media(max-width:720px){.app{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 1px 2px rgba(16,23,32,.04)}
+  .card h2{font-size:1rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 16px}
+  .field{margin-bottom:14px}
+  label{display:block;font-size:.88rem;font-weight:500;margin-bottom:5px}
+  .in{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fbfcfe}
+  .in span{padding:0 10px;color:var(--muted);font-weight:600;font-size:.9rem}
+  .in input{border:0;outline:0;padding:11px 10px;width:100%;font:inherit;background:transparent;text-align:right}
+  .in.suffix span{order:2}
+  .result{background:linear-gradient(160deg,#0f1720,#1b2637);color:#fff;border:0}
+  .result h2{color:#93a3bd}
+  .big{font-size:2.6rem;font-weight:800;letter-spacing:-.03em;margin:2px 0}
+  .big.good{color:#4ade80}.big.bad{color:#ff6b6f}
+  .rowline{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #24303f;font-size:.95rem}
+  .rowline:last-child{border:0}
+  .rowline .v{font-weight:600}
+  .muted2{color:#93a3bd}
+  .verdict{margin-top:14px;padding:12px 14px;border-radius:10px;font-weight:600;font-size:.92rem}
+  .verdict.ok{background:#12351f;color:#8ef0b0}.verdict.warn{background:#3a2a12;color:#f2c98e}.verdict.no{background:#3a1618;color:#ff9ea1}
+  .foot{margin:22px 0 44px;text-align:center;color:var(--muted);font-size:.92rem}
+  .foot a{color:var(--brand);text-decoration:none;font-weight:600}
+  .made{margin-top:8px;font-size:.86rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">Za darmo · bez konta · bez haczyka</span>
+    <h1>Ile <u>naprawdę</u> zarabiasz na zamówieniu?</h1>
+    <p class="sub">Wpisz swoje liczby — od razu zobaczysz, ile zostaje po zakupie, wysyłce, prowizjach, VAT i marketingu. Większość sklepów szacuje to za wysoko.</p>
+  </header>
+
+  <div class="app">
+    <div class="card">
+      <h2>Twoje liczby</h2>
+      <div class="field"><label>Cena sprzedaży (z VAT)</label><div class="in"><span>zł</span><input id="price" type="number" value="199" step="0.01"></div></div>
+      <div class="field"><label>Stawka VAT</label><div class="in suffix"><span>%</span><input id="vat" type="number" value="23" step="1"></div></div>
+      <div class="field"><label>Cena zakupu za sztukę (bez VAT)</label><div class="in"><span>zł</span><input id="cogs" type="number" value="70" step="0.01"></div></div>
+      <div class="field"><label>Koszt wysyłki (który Ty płacisz)</label><div class="in"><span>zł</span><input id="ship" type="number" value="15" step="0.01"></div></div>
+      <div class="field"><label>Prowizja płatności (np. Przelewy24/PayU)</label><div class="in suffix"><span>%</span><input id="fee" type="number" value="1.9" step="0.1"></div></div>
+      <div class="field"><label>Koszt marketingu na zamówienie (CAC)</label><div class="in"><span>zł</span><input id="cac" type="number" value="30" step="0.01"></div></div>
+    </div>
+
+    <div class="card result">
+      <h2>Ile Ci zostaje</h2>
+      <div class="big" id="profit">—</div>
+      <div class="muted2" id="marginline" style="margin-bottom:16px">— marża netto na zamówienie</div>
+      <div class="rowline"><span class="muted2">Przychód bez VAT</span><span class="v" id="rev">—</span></div>
+      <div class="rowline"><span class="muted2">− Zakup</span><span class="v" id="ocogs">—</span></div>
+      <div class="rowline"><span class="muted2">− Wysyłka</span><span class="v" id="oship">—</span></div>
+      <div class="rowline"><span class="muted2">− Prowizja</span><span class="v" id="ofee">—</span></div>
+      <div class="rowline"><span class="muted2">− Marketing</span><span class="v" id="ocac">—</span></div>
+      <div class="verdict" id="verdict">—</div>
+    </div>
+  </div>
+
+  <p class="foot">
+    Przydatne? Śmiało udostępnij. Bez zapisów, bez newslettera — sam ich nie lubię.
+    <span class="made">Zrobił Wesley — buduję działające narzędzia i aplikacje dla firm. <a href="#" id="contact">Potrzebujesz czegoś? Napisz →</a></span>
+  </p>
+</div>
+
+<script>
+  var ids=['price','vat','cogs','ship','fee','cac'];
+  var zl=function(n){return (n).toLocaleString('pl-PL',{minimumFractionDigits:2,maximumFractionDigits:2})+' zł';};
+  function calc(){
+    var price=+document.getElementById('price').value||0;
+    var vat=(+document.getElementById('vat').value||0)/100;
+    var cogs=+document.getElementById('cogs').value||0;
+    var ship=+document.getElementById('ship').value||0;
+    var feePct=(+document.getElementById('fee').value||0)/100;
+    var cac=+document.getElementById('cac').value||0;
+    var rev=price/(1+vat);
+    var fee=price*feePct;
+    var profit=rev-cogs-ship-fee-cac;
+    var margin=rev>0?(profit/rev*100):0;
+    document.getElementById('rev').textContent=zl(rev);
+    document.getElementById('ocogs').textContent=zl(cogs);
+    document.getElementById('oship').textContent=zl(ship);
+    document.getElementById('ofee').textContent=zl(fee);
+    document.getElementById('ocac').textContent=zl(cac);
+    var p=document.getElementById('profit');
+    p.textContent=zl(profit); p.className='big '+(profit>=0?'good':'bad');
+    document.getElementById('marginline').textContent=margin.toFixed(1).replace('.',',')+'% marża netto na zamówienie';
+    var v=document.getElementById('verdict');
+    if(profit<0){v.className='verdict no';v.textContent='⚠️ Dopłacasz do każdego zamówienia. Zmień cenę, koszt zakupu albo CAC.';}
+    else if(margin<15){v.className='verdict warn';v.textContent='Wąska marża — jeden zwrot lub wzrost kosztów i jesteś na zero.';}
+    else {v.className='verdict ok';v.textContent='Zdrowa marża. Jest miejsce na skalowanie.';}
+  }
+  ids.forEach(function(id){document.getElementById(id).addEventListener('input',calc);});
+  document.getElementById('contact').addEventListener('click',function(e){e.preventDefault();alert('Napisz do mnie na Facebooku / Messengerze — zbuduję coś dopasowanego do Twojego sklepu.');});
+  calc();
+</script>
+</body>
+</html>
